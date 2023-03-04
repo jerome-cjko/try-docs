@@ -6,40 +6,17 @@ on:
 permissions:
   contents: write
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - uses: actions/cache@v2
-        with:
-          key: ${{ github.ref }}
-          path: .cache
+      #- uses: actions/cache@v2
+      #  with:
+      #    key: ${{ github.ref }}
+      #    path: .cache
       - run: pip install mkdocs-material 
-      - run: mkdocs gh-deploy --force
-      - name: Package website
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: site
+      - run: mkdocs gh-deploy --force --clean --verbose
           
-    deploy:
-    name: Deploy
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    environment:
-      name: github-pages
-      #url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@main
