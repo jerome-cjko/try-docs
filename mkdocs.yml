@@ -2,6 +2,7 @@ site_name: TBIA Docs
 nav:
   - Getting Started: index.md
   - Full Example: example.md
+  - Try Try See: trytrysee.md
 theme:
    name: 'material'
    palette:
